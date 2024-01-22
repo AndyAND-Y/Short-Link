@@ -18,7 +18,7 @@ export default function Navbar() {
             </div>
             <div className="flex gap-4 p-2 text-lg text-white">
                 <Button
-                    label="Log In"
+                    label="Login"
                     onClick={() => router.push('/login')}
                 />
                 <Button
