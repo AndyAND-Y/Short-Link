@@ -27,7 +27,6 @@ export default function Register() {
 
 
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
-
         setIsLoading(true)
         axios.post('/api/register', data)
             .then(() => {
@@ -42,7 +41,7 @@ export default function Register() {
                 router.push('/');
             })
             .catch((error) => {
-                toast.error("Something went wrong! :(", {
+                toast.error(error, {
                     style: {
                         border: '1px solid white',
                         padding: '4px',
@@ -116,13 +115,17 @@ export default function Register() {
                 <Button
                     label="Continue with Google"
                     icon={FcGoogle}
-                    onClick={() => signIn("google")}
+                    onClick={() => {
+                        signIn("google")
+                    }}
                     disabled={isLoading}
                 />
                 <Button
                     label="Continue with Github"
                     icon={AiFillGithub}
-                    onClick={() => signIn("github")}
+                    onClick={() => {
+                        signIn("github")
+                    }}
                     disabled={isLoading}
                 />
 
