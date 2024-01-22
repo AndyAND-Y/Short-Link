@@ -46,8 +46,8 @@ const Input: React.FC<InputProps> = ({
                     disabled:opacity-70
                     disabled:cursor-not-allowed
                     
-                    ${formControl.errors[formControl.id] ? 'border-rose-500' : 'text-stone-950'}
-                    ${formControl.errors[formControl.id] ? 'focus:border-rose-500' : 'focus:border-stone-900'}
+                    ${formControl.errors[formControl.id] ? 'border-rose-500' : 'text-zinc-950'}
+                    ${formControl.errors[formControl.id] ? 'focus:border-rose-500' : 'focus:border-zinc-900'}
                 `}
             />
             <label
@@ -66,7 +66,7 @@ const Input: React.FC<InputProps> = ({
                     peer-placeholder-shown:translate-y-0 
                     peer-focus:scale-75
                     peer-focus:-translate-y-5
-                    ${formControl.errors[formControl.id] ? 'text-rose-500' : 'text-stone-950'}
+                    ${formControl.errors[formControl.id] ? 'text-rose-500' : 'text-zinc-950'}
                 
                 `}
             >

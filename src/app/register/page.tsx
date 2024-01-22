@@ -2,7 +2,8 @@
 
 import Button from "@/components/Button"
 import Input from "@/components/Input"
-import axios from "axios"
+import toastStyle from "@/providers/CustomStyle"
+import axios, { AxiosError } from "axios"
 import { signIn } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
@@ -30,25 +31,17 @@ export default function Register() {
         setIsLoading(true)
         axios.post('/api/register', data)
             .then(() => {
-                toast.success("Account Created!", {
-                    style: {
-                        border: '1px solid white',
-                        padding: '4px',
-                        backgroundColor: '#1c1917',
-                        color: 'white'
-                    }
-                });
-                router.push('/');
+                toast.success("Account Created!", toastStyle);
+                router.push('/login');
             })
-            .catch((error) => {
-                toast.error(error, {
-                    style: {
-                        border: '1px solid white',
-                        padding: '4px',
-                        backgroundColor: '#1c1917',
-                        color: 'white'
-                    }
-                });
+            .catch((error: AxiosError) => {
+
+                let errorMessage = "Something went wrong!";
+
+                if (error.response?.data) {
+                    errorMessage = (error.response.data as { error: string }).error;
+                }
+                toast.error(errorMessage, toastStyle);
             })
             .finally(() => {
                 setIsLoading(false);

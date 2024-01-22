@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import ToasterProvider from "@/providers/ToasterProvider";
+import getCurrentUser from "@/actions/getCurrentUser";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -11,17 +12,20 @@ export const metadata: Metadata = {
     description: "Link shortener",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
+
+    const currentUser = await getCurrentUser();
+
     return (
         <html lang="en">
 
             <body className={inter.className}>
                 <ToasterProvider />
-                <Navbar />
+                <Navbar currentUser={currentUser} />
                 {children}
             </body>
         </html>

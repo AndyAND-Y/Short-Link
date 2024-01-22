@@ -23,12 +23,12 @@ const Button: React.FC<ButtonProps> = ({
             w-full
             gap-1
             p-[10px]
-            bg-stone-900 
+            bg-zinc-900 
             border 
-            border-stone-900
+            border-zinc-900
             shadow
             rounded-xl 
-            hover:bg-stone-950 
+            hover:bg-zinc-950 
             hover:border-white 
             transition 
             duration-200

@@ -2,6 +2,7 @@
 
 import Button from "@/components/Button"
 import Input from "@/components/Input"
+import toastStyle from "@/providers/CustomStyle"
 import { signIn } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
@@ -33,24 +34,12 @@ export default function Login() {
             .then((cb) => {
                 setIsLoading(false);
                 if (cb?.ok) {
-                    toast.success("Logged in!", {
-                        style: {
-                            border: '1px solid white',
-                            padding: '4px',
-                            backgroundColor: '#1c1917',
-                            color: 'white'
-                        }
-                    });
+                    toast.success("Logged in!", toastStyle);
+                    router.refresh();
+                    setTimeout(() => router.push('/'), 500);
                 }
                 if (cb?.error) {
-                    toast.error(cb.error, {
-                        style: {
-                            border: '1px solid white',
-                            padding: '4px',
-                            backgroundColor: '#1c1917',
-                            color: 'white'
-                        }
-                    });
+                    toast.error(cb.error, toastStyle);
                 }
             })
     }

@@ -14,6 +14,16 @@ export async function POST(
 
     const hashedPassword = await bcrypt.hash(password, 12);
 
+    const registered = await prisma.user.findUnique({
+        where: {
+            email,
+        }
+    })
+
+    if (registered) {
+        return NextResponse.json({ error: "Already registerd!" }, { status: 400 })
+    }
+
     const user = await prisma.user.create({
         data:
             { email, name, hashedPassword }
