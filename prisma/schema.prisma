@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
     provider = "prisma-client-js"
 }
@@ -24,8 +21,7 @@ model Account {
     scope             String?
     id_token          String? @db.Text
     session_state     String?
-
-    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+    user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
     @@unique([provider, providerAccountId])
     @@index([userId])
@@ -45,8 +41,8 @@ model User {
     id             String    @id @default(cuid())
     name           String?
     email          String?   @unique
-    emailVerified  DateTime?
     image          String?
+    emailVerified  DateTime?
     freeTier       Boolean   @default(true)
     hashedPassword String?
     accounts       Account[]
@@ -69,7 +65,7 @@ model Link {
     createdAt    DateTime @default(now())
     userId       String
     private      Boolean  @default(true)
-    User         User     @relation(fields: [userId], references: [id])
+    User         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
     @@index([userId])
 }
