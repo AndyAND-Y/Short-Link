@@ -8,6 +8,7 @@ import SafeUser from "@/types/SafeUser";
 import toast from "react-hot-toast";
 import toastStyle from "@/providers/CustomStyle";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 
 interface CreateLinkProps {
@@ -17,6 +18,9 @@ interface CreateLinkProps {
 const CreateLink: React.FC<CreateLinkProps> = ({
     currentUser
 }) => {
+
+
+    const router = useRouter();
 
     const [isLoading, setIsLoading] = useState(false);
     const isLoggedIn = currentUser !== null;
@@ -34,6 +38,7 @@ const CreateLink: React.FC<CreateLinkProps> = ({
     });
 
     const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+        setIsLoading(true);
         if (!isLoggedIn) {
             toast.error("You have to be logged in!", toastStyle);
             return;
@@ -45,15 +50,22 @@ const CreateLink: React.FC<CreateLinkProps> = ({
         }
 
 
-        axios.post("/", data)
-            .then(() => { })
-            .catch((error) => {
-
+        axios.post("/api/link",
+            {
+                link: data.link,
+                user: currentUser,
+            }
+        )
+            .then(() => {
+                router.refresh();
+                toast.success("Link added!", toastStyle);
             })
-
-
-
-
+            .catch((error) => {
+                toast.error("Something went wrong!", toastStyle);
+            })
+            .finally(() => {
+                setIsLoading(false);
+            })
     }
 
 
