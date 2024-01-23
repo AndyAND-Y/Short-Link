@@ -86,7 +86,7 @@ export const LinkCard: React.FC<LinkCardProps> = ({
                     className="text-blue-500"
                     href={"http://localhost:3000/short/" + link.shortLink}
                 >
-                    {"/short/" + link.shortLink}
+                    {`http://${process.env.NODE_ENV === 'development' ? "localhost:3000" : process.env.VERCEL_URL}` + link.shortLink}
                 </NextLink>
 
                 </p>
