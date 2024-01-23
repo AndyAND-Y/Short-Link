@@ -60,7 +60,7 @@ model VerificationToken {
 
 model Link {
     id           String   @id @default(cuid())
-    originalLink String
+    originalLink String   @db.LongText
     shortLink    String
     createdAt    DateTime @default(now())
     userId       String

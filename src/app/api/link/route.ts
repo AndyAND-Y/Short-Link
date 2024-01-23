@@ -13,7 +13,8 @@ export async function POST(request: Request) {
 
     const storedLink = await prisma.link.findFirst({
         where: {
-            originalLink: link
+            originalLink: link,
+            userId: user.id,
         }
     })
 

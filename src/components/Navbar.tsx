@@ -2,11 +2,11 @@
 
 import { useRouter } from "next/navigation";
 import Button from "./Button";
-import SafeUser from "@/types/SafeUser";
 import { signOut } from "next-auth/react";
+import { User } from "@prisma/client";
 
 interface NavbarProps {
-    currentUser: SafeUser | null,
+    currentUser: User | null,
 }
 
 const Navbar: React.FC<NavbarProps> = ({
@@ -35,7 +35,12 @@ const Navbar: React.FC<NavbarProps> = ({
             />
             <Button
                 label={"Logout"}
-                onClick={() => signOut()}
+                onClick={() => {
+                    signOut({ redirect: false, callbackUrl: '/' }).then((data) => {
+                        router.push(data.url);
+                        router.refresh();
+                    })
+                }}
             />
         </div>
     }

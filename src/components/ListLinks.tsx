@@ -3,28 +3,18 @@ import Image from "next/image"
 import NextLink from "next/link";
 
 
-interface RecentLinksProps {
+interface ListLinksProps {
     links: ({ User: User } & Link)[];
 }
 
-const RecentLinks: React.FC<RecentLinksProps> = ({
+const ListLinks: React.FC<ListLinksProps> = ({
     links
 }) => {
 
     return (
         <div
-            className="text-white w-1/2"
+            className="text-white w-2/3"
         >
-            <div
-                className="flex justify-center"
-            >
-                <h2
-                    className="text-3xl font-semibold"
-                >
-                    Recent Links
-                </h2>
-            </div>
-
             <div
                 className="flex flex-col gap-4 w-full mt-4"
             >
@@ -40,7 +30,7 @@ interface LinkCardProps {
     link: ({ User: User } & Link)
 }
 
-const LinkCard: React.FC<LinkCardProps> = ({
+export const LinkCard: React.FC<LinkCardProps> = ({
     link
 }) => {
     return (
@@ -64,36 +54,48 @@ const LinkCard: React.FC<LinkCardProps> = ({
                         {link.User.name}
                     </p>
                 </div>
-                <div>
-                    {link.createdAt.toDateString()}
+                <div
+                    className="sm:block hidden"
+                >
+                    {link.createdAt.toLocaleDateString('en-us', {
+                        year: 'numeric',
+                        day: '2-digit',
+                        month: 'short',
+                    })}
                 </div>
             </div>
             <div
-                className="flex gap-1"
+                className="flex gap-1 overflow-x-clip"
             >
-                <p>Original Link:</p>
-                <NextLink
+                <p
+                    className="text-nowrap"
+                >Original Link ({link.originalLink.length}): <NextLink
                     className="text-blue-500"
                     href={link.originalLink}
                 >
-                    {link.originalLink}
-                </NextLink>
+                        {link.originalLink}
+                    </NextLink>
+                </p>
+
+
             </div>
             <div
                 className="flex gap-1"
             >
-                <p>Shorten Link:</p>
-                <NextLink
+                <p>Shorten Link ({(link.shortLink + '/short/').length}): <NextLink
                     className="text-blue-500"
                     href={"http://localhost:3000/short/" + link.shortLink}
                 >
                     {"/short/" + link.shortLink}
                 </NextLink>
+
+                </p>
+
             </div>
         </div >
     )
 }
 
 
-export default RecentLinks;
+export default ListLinks;
 

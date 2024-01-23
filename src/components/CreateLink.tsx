@@ -4,15 +4,15 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import Input from "./Input";
 import { useState } from "react";
 import Button from "./Button";
-import SafeUser from "@/types/SafeUser";
 import toast from "react-hot-toast";
 import toastStyle from "@/providers/CustomStyle";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { User } from "@prisma/client";
 
 
 interface CreateLinkProps {
-    currentUser: SafeUser | null
+    currentUser: User | null
 }
 
 const CreateLink: React.FC<CreateLinkProps> = ({

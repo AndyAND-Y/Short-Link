@@ -1,4 +1,3 @@
-import { User } from "@prisma/client";
 import prisma from "@/lib/prismadb";
 
 export default async function getUserLinks(userId: string) {
@@ -9,13 +8,6 @@ export default async function getUserLinks(userId: string) {
         }
     })
 
-    if (!links) {
-        return []
-    }
-
-    return links.map((link) => ({
-        ...link,
-        createdAt: link.createdAt.toISOString()
-    }))
+    return links
 
 }
