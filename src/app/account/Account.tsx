@@ -40,6 +40,7 @@ const Account: React.FC<AccountProps> = ({
                             return { User: currentUser, ...link }
                         })
                     }
+                    canBeDeleted
                 />
 
             </div>

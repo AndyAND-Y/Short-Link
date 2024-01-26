@@ -5,6 +5,7 @@ interface ButtonProps {
     onClick: () => void;
     disabled?: boolean,
     icon?: IconType
+    size?: "sm" | "lg"
 }
 
 
@@ -12,15 +13,19 @@ const Button: React.FC<ButtonProps> = ({
     label,
     onClick,
     icon: Icon,
-    disabled
+    disabled,
+    size
 }) => {
 
     return <button
         disabled={disabled}
-        className="
+        className={`
+            
+        
+            ${((size && size === 'lg') || size === undefined) && "w-full"}
+            ${(size && size === 'sm') && "w-fit"}
             items-center
             relative
-            w-full
             gap-1
             p-[10px]
             bg-zinc-900 
@@ -34,7 +39,7 @@ const Button: React.FC<ButtonProps> = ({
             duration-200
             disabled:opacity-70
             disabled:cursor-not-allowed
-        "
+        `}
         onClick={onClick}
     >
         {Icon && (

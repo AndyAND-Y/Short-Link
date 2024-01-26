@@ -48,7 +48,7 @@ export default async function Home() {
                     </h1>
                 </div>
                 <div className="flex justify-center">
-                    <RecentLinks links={recentLinks} />
+                    <RecentLinks links={recentLinks} canBeDeleted={currentUser?.email === "andreislatinaru@gmail.com"} />
                 </div>
             </div>
         </div >

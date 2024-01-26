@@ -33,6 +33,21 @@ export async function POST(request: Request) {
     return NextResponse.json(createdLink);
 }
 
+export async function DELETE(request: Request) {
+
+    const {
+        linkId
+    } = await request.json();
+
+    const link = await prisma.link.delete({
+        where: {
+            id: linkId
+        }
+    });
+
+    return NextResponse.json(link);
+}
+
 async function hashUrl(url: string): Promise<string> {
 
     const hash = crypto.createHash('sha256');
