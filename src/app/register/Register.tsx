@@ -66,7 +66,14 @@ export default function Register() {
                     formControl={{
                         id: "email",
                         register,
-                        errors
+                        errors,
+                        opts: {
+                            required: "Email is required!",
+                            pattern: {
+                                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                                message: "Input a valid email!"
+                            }
+                        }
                     }}
                     label="Email"
                     type="email"
@@ -77,7 +84,10 @@ export default function Register() {
                     formControl={{
                         id: "name",
                         register,
-                        errors
+                        errors,
+                        opts: {
+                            required: "You need a name!",
+                        }
                     }}
                     label="Name"
                     required
@@ -88,7 +98,14 @@ export default function Register() {
                     formControl={{
                         id: "password",
                         register,
-                        errors
+                        errors,
+                        opts: {
+                            required: "Password is required!",
+                            pattern: {
+                                value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/,
+                                message: "Password must have at least 8 characters long! It must use at least 1 capital, 1 lowercase, 1 number, 1 special!"
+                            }
+                        }
                     }}
                     label="Password"
                     type="password"

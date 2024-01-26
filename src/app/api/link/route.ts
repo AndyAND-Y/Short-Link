@@ -9,6 +9,20 @@ export async function POST(request: Request) {
         user
     } = await request.json();
 
+    if (!isURL(link)) {
+        return NextResponse.json({ error: "Not a valid url!" }, { status: 400 })
+    }
+
+    const existingUser = await prisma.user.findUnique({
+        where: {
+            id: user.id
+        }
+    })
+
+    if (!existingUser) {
+        return NextResponse.json({ error: "User does not exist!" }, { status: 400 })
+    }
+
     const hashedUrl = await hashUrl(link);
 
     const storedLink = await prisma.link.findFirst({
@@ -46,6 +60,12 @@ export async function DELETE(request: Request) {
     });
 
     return NextResponse.json(link);
+}
+
+function isURL(link: string) {
+
+    const urlRegex = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/;
+    return urlRegex.test(link);
 }
 
 async function hashUrl(url: string): Promise<string> {

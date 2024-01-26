@@ -6,7 +6,7 @@ import { useState } from "react";
 import Button from "./Button";
 import toast from "react-hot-toast";
 import toastStyle from "@/providers/CustomStyle";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { User } from "@prisma/client";
 
@@ -60,8 +60,14 @@ const CreateLink: React.FC<CreateLinkProps> = ({
                 router.refresh();
                 toast.success("Link added!", toastStyle);
             })
-            .catch((error) => {
-                toast.error("Something went wrong!", toastStyle);
+            .catch((error: AxiosError) => {
+
+                let errorMessage = "Something went wrong!";
+
+                if (error.response?.data) {
+                    errorMessage = (error.response.data as { error: string }).error;
+                }
+                toast.error(errorMessage, toastStyle);
             })
             .finally(() => {
                 setIsLoading(false);
@@ -78,7 +84,14 @@ const CreateLink: React.FC<CreateLinkProps> = ({
                 formControl={{
                     id: "link",
                     errors,
-                    register
+                    register,
+                    opts: {
+                        required: "Link is required!",
+                        pattern: {
+                            value: /^(https?):\/\/[^\s/$.?#].[^\s]*$/,
+                            message: "It has to be a valid link!"
+                        }
+                    }
                 }}
                 disabled={isLoading}
                 required

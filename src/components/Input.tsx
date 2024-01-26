@@ -1,6 +1,6 @@
 "use client"
 
-import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form"
+import { FieldErrors, FieldValues, RegisterOptions, UseFormRegister } from "react-hook-form"
 
 interface InputProps {
 
@@ -12,6 +12,7 @@ interface InputProps {
         id: string,
         register: UseFormRegister<FieldValues>,
         errors: FieldErrors,
+        opts?: RegisterOptions<FieldValues, string>
     }
 }
 
@@ -20,8 +21,10 @@ const Input: React.FC<InputProps> = ({
     label,
     disabled,
     required,
-    type = "text"
+    type
 }) => {
+
+
 
     return (
         <div className="w-full relative">
@@ -30,7 +33,7 @@ const Input: React.FC<InputProps> = ({
                 id={formControl.id}
                 disabled={disabled}
                 {...formControl.register(formControl.id, { required })}
-                type={type}
+                type={type || "text"}
                 placeholder=" "
                 className={`
                     peer
