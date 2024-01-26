@@ -1,4 +1,3 @@
-"use client";
 import { Link, User } from "@prisma/client";
 import Image from "next/image";
 import NextLink from "next/link";
@@ -7,6 +6,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import toastStyle from "@/providers/CustomStyle";
+import Btns from "./ButtonsLinkCard";
 
 interface LinkCardProps {
     link: ({ User: User } & Link)
@@ -18,12 +18,8 @@ export const LinkCard: React.FC<LinkCardProps> = ({
     canBeDeleted
 }) => {
 
-    const router = useRouter();
     const host = process.env.NODE_ENV !== 'production' ? "localhost:3000" : process.env.PUBLIC_URL;
-    const pathShortLink = `http://${host}/` + link.shortLink;
-
-    console.log(process.env.NODE_ENV);
-    console.log(host);
+    const path = `http://${host}/` + link.shortLink;
 
     return (
         <div
@@ -76,42 +72,15 @@ export const LinkCard: React.FC<LinkCardProps> = ({
             >
                 <p
                     className=""
-                >Shorten Link ({pathShortLink.length}): <NextLink
+                >Shorten Link ({path.length}): <NextLink
                     className="text-blue-500 hover:text-blue-600"
-                    href={pathShortLink}
+                    href={path}
                 >
-                        {pathShortLink}
+                        {path}
                     </NextLink>
                 </p>
             </div>
-
-            <div
-                className="flex gap-1 justify-between"
-            >
-                <Button
-                    label="Share"
-                    size={canBeDeleted ? "sm" : 'lg'}
-                    onClick={() => {
-                        navigator.clipboard.writeText(pathShortLink);
-                        toast.success("Copied to clipboard!", toastStyle);
-                    }}
-                />
-                {canBeDeleted && <Button
-                    label="Delete"
-                    size={canBeDeleted ? "sm" : 'lg'}
-                    onClick={() => {
-                        axios.delete('/api/link', { data: { linkId: link.id } })
-                            .then(() => {
-                                toast.success("Deleted successfully!", toastStyle);
-                                router.refresh()
-                            })
-                            .catch(() => {
-                                toast.error("Something went wrong!", toastStyle)
-                            })
-                    }}
-                />}
-
-            </div>
+            <Btns canBeDeleted={canBeDeleted} linkId={link.id} textToPaste={path} />
 
         </div >
     )
