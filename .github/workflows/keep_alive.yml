@@ -1,7 +1,7 @@
 name: Keep alive cron job
 on:
   schedule:
-    - cron: '0 12 * * *' # daily https://crontab.guru/#0_12_*_*_*
+    - cron: '*/6 * * * *' # daily https://crontab.guru/#*/6_*_*_*_*
 jobs:
   cron:
     runs-on: ubuntu-latest
